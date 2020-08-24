@@ -1,0 +1,18 @@
+{
+	"debug": {
+		"enabled": true
+	},
+	"server": {
+		"address": "0.0.0.0",
+		"port": 8000,
+		"tls": {
+			"enabled": false,
+			"private_key_file": "certs/privatekey.pem",
+			"certificate_file": "certs/certificate.pem",
+			"cert_auth_file": false
+		},
+		"cors": {
+			"enabled": true
+		}
+	}
+}

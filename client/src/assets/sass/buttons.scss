@@ -1,0 +1,15 @@
+$spacing-vertical: 20px;
+$spacing-horizontal: 8px;
+
+.button-group,
+.action-group {
+	padding-top: $spacing-vertical;
+	padding-bottom: $spacing-vertical;
+
+	.button-inline,
+	.inline-button {
+		margin-left: $spacing-horizontal;
+		margin-right: $spacing-horizontal;
+	}
+}
+

@@ -1,0 +1,33 @@
+{
+	"name": "itic.internship.frontdesklogger",
+	"version": "0.0.1",
+	"description": "Manage Front Desk FootFalls using CRM",
+	"author": "ITI Pty. Ltd.",
+	"license": "SEE LICENSE IN LICENSE",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git@bitbucket.org:itic-internship/itic.internship.frontdesklogger.git"
+	},
+	"engines": {
+		"node": ">= 8.1.4"
+	},
+	"main": "main.js",
+	"directories": {
+		"client": "./client"
+	},
+	"scripts": {
+		"start": "./bin/server",
+		"build": "npm run build-client",
+		"build-client": "cd $npm_package_directories_client && npm run build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"cookie-parser": "^1.4.4",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"morgan": "^1.9.1",
+		"prop-types": "^15.7.2",
+		"pug": "^2.0.4"
+	}
+}

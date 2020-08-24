@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+const log = require('../lib/Logger')('Server') || console;
+const config = require('../config');
+const app = require('../app');
+
+// Normalise a port into a number, string, or false
+function normalisePort(val) {
+	let port = parseInt(val, 10);
+	if (isNaN(port))
+		return val;  // named pipe
+	if (port >= 0)
+		return val;  // port number
+	return false;
+}
+
+
+let address = (config.server.address) ? config.server.address : '0.0.0.0';
+let port = normalisePort(config.server.port);
+app.set('port', port);
+
+let server;
+if (config.server.tls.enabled) {
+	// HTTPS
+	let tls_options = {
+		key:  fs.readFileSync(config.server.tls.private_key_file),
+		cert: fs.readFileSync(config.server.tls.certificate_file),
+		//ca:   fs.readFileSync(config.server.tls.cert_auth_file),
+	}
+	// Only add CA property if a CA file is defined
+	let ca_file = config.server.tls.cert_auth_file;
+	if (ca_file && ca_file.length) {
+		tls_options.ca = fs.readFileSync(ca_file);
+	}
+
+	server = https.createServer(tls_options, app);
+
+} else {
+	// HTTP
+	server = http.createServer(app);
+}
+
+
+// TODO: attach WebSocket server to servers
+//chatserver.attachTo(server);
+
+
+// Open server
+server.listen(port, address);
+
+server.on('listening', () => {
+	let addr = server.address();
+	let bind = (typeof addr === 'string')
+		? `pipe ${addr}`
+		: `port ${addr.port}`;
+	log.info(`Listening on ${bind} (address: ${address})`);
+});
+
+server.on('error', (err) => {
+	if (err.syscall !== 'listen')
+		throw err;
+
+	let addr = server.address();
+	let bind = (typeof addr === 'string')
+		? `Pipe ${addr}`
+		: `Port ${addr.port}`;
+
+	// Handle specific listen errors with friendly messages
+	switch (err.code) {
+		case 'EACCES':
+			log.error(`${bind} requires elevated privileges`);
+			process.exit(1);
+			break;
+		case 'EADDRINUSE':
+			log.error(`${bind} is already in use`);
+			process.exit(1);
+			break;
+		default:
+			throw err;
+	}
+});

@@ -1,19 +1,18 @@
-FrontDesk Logger
+Node React Scaffold
 =============================
 
 Initial Commit.
 
-## What is FrontDesk Logger? ##
+## What is Node React Scaffold? ##
 
-* FrontDesk Logger is the application developed for ITIC Front Desk Team to be able to log and monitor the footfall at the testing centre.
+* Node React Scaffold is a scoffold/ bolierplate code for a Nodejs/ Expressjs Server and React Client.
 * v0.0.0
 
 
 ## Tech Stack ##
 
 * Nodejs v10.19.0
-* ReactJs / VueJs
-* OpenCRX
+* ReactJs
 
 
 ## Code Style guidelines ##
